@@ -20,3 +20,29 @@ from django.urls import path
 urlpatterns = [
     path('admin/', admin.site.urls),
 ]
+
+from django.contrib import admin
+from django.urls import path, include  # Include the 'include' function
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('api/', include('products.urls')),  # Include the 'products' app's urls
+]
+
+# ecommerce/urls.py
+from rest_framework_simplejwt import views as jwt_views
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('api/', include('products.urls')),
+    path('api/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
+]
+
+from django.urls import path
+from products import views
+
+urlpatterns = [
+    path('api/endpoint/', views.some_view_function, name='some-view'),
+    # Add other URL patterns as needed
+]
